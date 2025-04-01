@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group(function () {
 
 });
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/books', [BookController::class, 'index']); // Get all books
 Route::post('/books', [BookController::class, 'store']); // Create a new book

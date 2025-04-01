@@ -31,22 +31,32 @@ class AuthController extends Controller
               'token' => $token,
           ]);
       }
+// Login
+public function login(Request $request)
+{
+    // Validate the login credentials
+    $credentials = $request->only('email', 'password');
 
-      // Login
-      public function login(Request $request)
-      {
-          $credentials = $request->only('email', 'password');
+    try {
+        // Attempt to authenticate the user and generate a JWT token
+        if (!$token = JWTAuth::attempt($credentials)) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        }
 
-          try {
-              if (!$token = JWTAuth::attempt($credentials)) {
-                  return response()->json(['error' => 'Invalid credentials'], 401);
-              }
-          } catch (JWTException $e) {
-              return response()->json(['error' => 'Could not create token'], 500);
-          }
+        // Get the authenticated user
+        $user = auth()->user();
 
-          return response()->json(['token' => $token]);
-      }
+        // Return the user and token in the response
+        return response()->json([
+            'user' => $user,
+            'token' => $token
+        ]);
+    } catch (JWTException $e) {
+        // If something goes wrong, return a failure response
+        return response()->json(['error' => 'Could not create token'], 500);
+    }
+}
+
 
       // Get authenticated user
       public function me(Request $request)
