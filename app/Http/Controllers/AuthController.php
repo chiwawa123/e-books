@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -12,7 +15,7 @@ class AuthController extends Controller
           $request->validate([
               'name' => 'required',
               'email' => 'required|email|unique:users',
-              'password' => 'required|min:6|confirmed',
+              'password' => 'required|min:6',
           ]);
 
           $user = User::create([
