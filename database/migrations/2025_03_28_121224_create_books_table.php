@@ -15,7 +15,6 @@ return new class extends Migration
             $table->increments('book_id');
             $table->string('title')->nullable();
             $table->string('author')->nullable();
-            $table->string('publisher')->nullable();
             $table->string('year')->nullable();
             $table->string('description')->nullable();
         });

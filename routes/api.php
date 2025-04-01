@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
 });
+Route::get('/books', [BookController::class, 'index']); // Get all books
+Route::post('/books', [BookController::class, 'store']); // Create a new book
+Route::get('/books/{id}', [BookController::class, 'show']); // Get a single book
+Route::put('/books/{id}', [BookController::class, 'update']); // Update a book
+Route::delete('/books/{id}', [BookController::class, 'destroy']); // Delete a book

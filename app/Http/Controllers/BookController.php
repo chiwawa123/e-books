@@ -26,6 +26,18 @@ class BookController extends Controller
                'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
            ]);
 
+           // Check if the book already exists (by title and author)
+           $existingBook = Book::where('title', $request->title)
+                               ->where('author', $request->author)
+                               ->first();
+
+           if ($existingBook) {
+               return response()->json([
+                   'message' => 'This book already exists in the system.',
+                   'book' => $existingBook
+               ], 409); // 409 Conflict
+           }
+
            // Handle file upload for cover_image (if any)
            $coverImagePath = $request->file('cover_image')
                ? $request->file('cover_image')->store('covers', 'public')
@@ -40,8 +52,12 @@ class BookController extends Controller
                'cover_image' => $coverImagePath,
            ]);
 
-           return response()->json($book, 201);
+           return response()->json([
+               'message' => 'Book created successfully!',
+               'book' => $book
+           ], 201);
        }
+
 
        // Show a specific book by ID
        public function show($id)

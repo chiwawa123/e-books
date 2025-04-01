@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Book extends Model
 {
-    protected $table = 'tbl_books';
+    protected $table = 'books';
 	protected $primaryKey = 'book_id';
 	public $timestamps = false;
 
