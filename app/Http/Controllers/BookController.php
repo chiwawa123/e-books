@@ -21,7 +21,7 @@ class BookController extends Controller
            $request->validate([
                'title' => 'required|string|max:255',
                'author' => 'required|string|max:255',
-               'year' => 'required|integer',
+            // Update this line
                'description' => 'required|string',
                'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
            ]);
